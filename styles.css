@@ -12,7 +12,7 @@
   --text-5: #D0D0D0;
 
   --accent-1: #0B5407;
-  --accent-2: #0f5a9f;
+  --accent-2: #cfdaa8;
 
   --trans-time-slow: 600ms ease-in-out;
   --trans-time-med: 300ms ease-in-out;
@@ -56,7 +56,6 @@ html {
 body {
 	margin: 0;
 	background-color: #ffffef;
-	overflow-x: hidden;
 }
 
 .outer-container {
@@ -120,12 +119,14 @@ h2::after, h4::after {
 button {
 	border: none;
 	cursor: pointer;
-	transition: var(--trans-time-med);
-	padding: 0;
+	transition: var(--trans-time-fast);
+	padding: 2px 16px;
+	box-shadow: 3px 3px 0 var(--accent-2);
 }
 
 button:hover {
-	padding: 0 20px;
+	transform: translate(3px, 3px);
+	box-shadow: 1px 1px;
 }
 
 a {
@@ -133,18 +134,6 @@ a {
 	width: fit-content;
 	text-decoration: none;
 	border: none;
-}
-
-.volg-ons a {
-	display: flex;
-	align-items: center;
-	column-gap: 4px;
-	margin-top: -6px;
-	margin-bottom: 10px;
-}
-
-.volg-ons p {
-	margin: 0 !important
 }
 
 p {
@@ -294,7 +283,6 @@ p.s {
 
 .ontdek-ons {
 	margin: 0;
-	padding: 2px 16px;
 	letter-spacing: var(--letter-spacing-h3);
 	color: var(--fill-2);
 	background-color: var(--accent-1);
@@ -315,8 +303,20 @@ p.s {
 	margin-top: auto;
 }
 
-#start {
+#start, #home, #wandeling, #einddorp, #planning, #prijzen, #faq {
 	scroll-margin-top: 80px;
+}
+
+.volg-ons a {
+	display: flex;
+	align-items: center;
+	column-gap: 4px;
+	margin-top: -6px;
+	margin-bottom: 10px;
+}
+
+.volg-ons p {
+	margin: 0 !important
 }
 
 .footer{
@@ -354,23 +354,56 @@ h2.footer-title.top::before {
 	margin-top: 32px;
 	display: grid;
   grid-template-columns: 1fr 1fr 2fr;
-	grid-template-rows: auto auto;
+	grid-template-rows: 1fr 1fr; /*moet 1fr 1fr zijn bij finale*/
 	column-gap: 24px;
 	row-gap: 0;       /*moet 24px zijn bij finale versie*/
 }
 
+h2.inschrijven {
+	color: var(--accent-1) !important;
+	background-color: var(--fill-2);
+	font-weight: 400;
+}
+
+h2.inschrijven.header {
+	color: var(--fill-2) !important;
+	background-color: var(--accent-1);
+}
+
+.inschrijven-a.header {
+	position: fixed;
+	top: 16px;
+	right: 32px;
+	opacity: 0; 
+	pointer-events: none;
+	transform-origin: right top;
+	transform: scale(0.6);
+	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2);
+	transition: opacity var(--trans-time-fast);
+	z-index: 999;
+}
+
+.inschrijven-a.header.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+h2.inschrijven::before, h2.inschrijven::after {
+	margin-bottom: 0;
+}
+
 .nav-menu {
-	display: none;		/*moet bij finale weg*/
-/*
-	grid-column: 1;		/*moet wel bij finale
+	/*display: none;		/*moet bij finale weg*/
+
+	grid-column: 1;		/*moet wel bij finale*/
 	grid-row: 1 / 3;
-*/
+/**/
 	margin-top: -12px;
 }
 
 .contact {
-	grid-column: 1;   /*finale: moet 2 zijn*/
-	grid-row: 2;      /*finale: moet 1 zijn*/
+	grid-column: 2;   /*finale: moet 1 zijn*/
+	grid-row: 1;      /*finale: moet 2 zijn*/
 	margin-top: -12px;
 }
 
