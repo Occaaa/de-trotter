@@ -1,3 +1,36 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const floatingBtn = document.querySelector('.inschrijven-a.header');
+  const wandelingSec = document.getElementById('wandeling');
+  const footerSec = document.getElementById('footer');
+
+  if (floatingBtn && wandelingSec && footerSec) {
+    function updateButtonVisibility() {
+      const wandelingRect = wandelingSec.getBoundingClientRect();
+      const footerRect = footerSec.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Zichtbaar zodra #wandeling in de buurt/in beeld komt
+      const isPastWandeling = wandelingRect.top <= (windowHeight * 0.8);
+
+      // Blijft zichtbaar totdat de bovenkant van de footer de top van het scherm bereikt (~100px waar de knop hangt)
+      // Dus NIET al wanneer de footer onderaan het scherm verschijnt!
+      const isBeforeFooter = footerRect.top > 100;
+
+      if (isPastWandeling && isBeforeFooter) {
+        floatingBtn.classList.add('is-visible');
+      } else {
+        floatingBtn.classList.remove('is-visible');
+      }
+    }
+
+    window.addEventListener('scroll', updateButtonVisibility, { passive: true });
+    window.addEventListener('resize', updateButtonVisibility);
+    updateButtonVisibility();
+  }
+});
+
+
+
 const targetDate = new Date(Date.UTC(2027, 0, 17, 11, 0, 0)); // 12u00 Belgische wintertijd
 let reloadStarted = false;
 
