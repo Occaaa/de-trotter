@@ -19,8 +19,8 @@
   --trans-time-fast: 200ms ease-in-out;
 
   /* Fluid font sizes using clamp() */
-  --font-size-s: clamp(0.65rem, 1.5vw, 0.75rem);
-  --font-size-p: clamp(0.9rem, 2vw, 1rem);
+  --font-size-s: clamp(0.7rem, 1.5vw, 0.8rem);
+  --font-size-p: clamp(1rem, 2vw, 1.1rem);
   --font-size-h6: clamp(1.1rem, 3vw, 1.333rem);
   --font-size-h5: clamp(1.4rem, 4vw, 1.777rem);
   --font-size-h4: clamp(1.3rem, 4vw, 1.8rem);
