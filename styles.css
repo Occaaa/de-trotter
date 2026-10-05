@@ -56,6 +56,7 @@ html {
 body {
 	margin: 0;
 	background-color: #ffffef;
+	overflow-x: hidden;
 }
 
 .outer-container {
@@ -354,9 +355,8 @@ h2.footer-title.top::before {
 	margin-top: 32px;
 	display: grid;
   grid-template-columns: 1fr 1fr 2fr;
-	grid-template-rows: 1fr 1fr; /*moet 1fr 1fr zijn bij finale*/
+	grid-template-rows: 1fr 1fr;
 	column-gap: 24px;
-	row-gap: 0;       /*moet 24px zijn bij finale versie*/
 }
 
 h2.inschrijven {
@@ -368,6 +368,16 @@ h2.inschrijven {
 h2.inschrijven.header {
 	color: var(--fill-2) !important;
 	background-color: var(--accent-1);
+}
+
+button:has(.inschrijven.header){
+	box-shadow: calc(3px / 0.6) calc(3px / 0.6) 0 var(--accent-2);
+	padding: calc(2px / 0.6) calc(16px / 0.6);
+}
+
+button:has(.inschrijven.header):hover {
+	transform: translate(calc(3px / 0.6), calc(3px / 0.6));
+	box-shadow: calc(1px / 0.6) calc(1px / 0.6);
 }
 
 .inschrijven-a.header {
@@ -393,17 +403,14 @@ h2.inschrijven::before, h2.inschrijven::after {
 }
 
 .nav-menu {
-	/*display: none;		/*moet bij finale weg*/
-
-	grid-column: 1;		/*moet wel bij finale*/
+	grid-column: 1;
 	grid-row: 1 / 3;
-/**/
 	margin-top: -12px;
 }
 
 .contact {
-	grid-column: 2;   /*finale: moet 1 zijn*/
-	grid-row: 1;      /*finale: moet 2 zijn*/
+	grid-column: 2;
+	grid-row: 1;
 	margin-top: -12px;
 }
 
