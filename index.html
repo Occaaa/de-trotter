@@ -8,10 +8,19 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
 		gtag('config', 'G-X63PJ9KTJ5');
+
+		document.addEventListener("click", function (event) {
+			const link = event.target.closest("[data-track]");
+			if (!link || typeof gtag !== "function") return;
+			gtag("event", "button-click", {
+				button_name: link.dataset.track, 
+				link_url: link.href || "",
+				page_path: window.location.pathname
+			});
+		});
 	</script>
-	
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Teaserpage</title>
@@ -41,7 +50,7 @@
 					<h3 class="adres">Lierbaan 20, 1850 Grimbergen</h3>
 				</div>
 				<div class="info-row">
-					<a class="ontdek-ons-a" href="#start">
+					<a class="ontdek-ons-a" href="#start" data-track="ontdek_ons">
 							<button>
 							<h3 class="ontdek-ons">&#8595; Ontdek ons &#8595;</h3>
 						</button>
@@ -62,7 +71,7 @@
 		<p>We zijn nog volop bezig met de volgende editie</p>
 		<p style="margin-top: 0">Wat je precies te wachten staat, houden we nog even geheim :&#41;</p>
 		<p style="margin-bottom: 20px">Kom terug op 17 januari en ontdek alles dat je weten moet!</p>
-		<a href="https://www.instagram.com/detrotter_ksagrimbergen" target="_blank">
+		<a href="https://www.instagram.com/detrotter_ksagrimbergen" data-track="volg_ons" target="_blank">
 			<button>Volg ons &#10230</button>
 		</a>
 		<div class="spacing"></div>
