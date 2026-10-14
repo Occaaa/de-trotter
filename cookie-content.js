@@ -13,9 +13,29 @@ acceptButton.addEventListener("click", function () {
   banner.hidden = true;
 });
 
-acceptButton.addEventListener("click", function () {
+rejectButton.addEventListener("click", function () {
   posthog.opt_out_capturing();
   banner.hidden = true;
 });
 
-updateCookiebanner();
+let attempts = 0;
+const maxAttempts = 20;
+
+function retryCookiebanner() {
+  attempts++;
+
+  if (typeof posthog !== "undefined") {
+    updateCookiebanner();
+    return;
+  }
+
+  if (attempts < maxAttempts) {
+    setTimeout(retryCookiebanner, 250);
+  } else {
+    // PostHog is niet op tijd geladen.
+    // Toon de banner als terugvaloptie.
+    banner.hidden = false;
+  }
+}
+
+retryCookiebanner();
