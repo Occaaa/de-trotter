@@ -453,6 +453,7 @@ h2.inschrijven::before, h2.inschrijven::after {
 	z-index: 999;
 	right: 32px;
 	bottom: 16px;
+	width: min(calc(100vw - 2*32px), 400px);
 	display: flex;
 	justify-content: center;
 	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.15);
@@ -464,7 +465,6 @@ h2.inschrijven::before, h2.inschrijven::after {
 }
 
 .cookie-banner_content {
-	width: min(calc(100vw - 2*32px), 400px);
 	padding: 16px 24px;
 	background-color: var(--accent-1);
 	color: var(--fill-2);
