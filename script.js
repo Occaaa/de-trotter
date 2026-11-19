@@ -32,86 +32,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //AUTOMATISCHE SPONSORBALK
-// GOOGLE DRIVE CONFIGURATIE
-const API_KEY = "AIzaSyCHNm5U2mhb4smROFU51Q4D7CNNDi0zSlo";
-const FOLDER_ID = "1peh-VvG4H3ORw8-b43vRXgyNqE4ci34M";
 
-// ELEMENT OP DE WEBSITE
+const CLOUD_NAME = "pc9fhedb";
+const SPONSOR_TAG = "trotter_sponsor";
+
 const sponsorBalk = document.getElementById("sponsorbalk");
 
-// FUNCTIE OM ALLE AFBEELDINGEN OP TE HALEN
 async function laadSponsors() {
     try {
-        let bestanden = [];
-        let pageToken = null;
-
-        // Haal alle pagina's met bestanden op
-        do {
-            const parameters = new URLSearchParams({
-                key: API_KEY,
-                q: `'${FOLDER_ID}' in parents and trashed = false`,
-                fields: "nextPageToken,files(id,name,mimeType)",
-                pageSize: "1000",
-                orderBy: "name"
-            });
-
-            if (pageToken) {
-                parameters.set("pageToken", pageToken);
-            }
-
-            const response = await fetch(
-                `https://www.googleapis.com/drive/v3/files?${parameters}`
-            );
-
-            if (!response.ok) {
-                throw new Error(`Google Drive API-fout: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            bestanden = bestanden.concat(data.files || []);
-            pageToken = data.nextPageToken;
-
-        } while (pageToken);
-
-        // Filter uitsluitend afbeeldingen
-        const afbeeldingen = bestanden.filter(bestand =>
-            bestand.mimeType &&
-            bestand.mimeType.startsWith("image/")
+        const response = await fetch(
+            `https://res.cloudinary.com/${CLOUD_NAME}/image/list/${SPONSOR_TAG}.json`
         );
 
-        // Verwijder de laadmelding
+        if (!response.ok) {
+            throw new Error(`Cloudinary fout: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const afbeeldingen = data.resources || [];
+
         sponsorBalk.replaceChildren();
 
-        // Toon melding als er geen afbeeldingen zijn
         if (afbeeldingen.length === 0) {
             sponsorBalk.textContent = "Er zijn momenteel geen sponsors.";
             return;
         }
 
-        // Maak voor elke afbeelding een img-element
         afbeeldingen.forEach(bestand => {
-            console.log("Naam:", bestand.name, "| ID:", bestand.id);
-
             const afbeelding = document.createElement("img");
-            afbeelding.src = "https://res.cloudinary.com/JOUW_ACCOUNT/image/upload/sponsors/logo.png";
-            afbeelding.alt = bestand.name;
+
+            afbeelding.src = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${bestand.public_id}.${bestand.format}`;
+
+            afbeelding.alt = bestand.public_id;
             afbeelding.loading = "lazy";
             afbeelding.classList.add("sponsorlogo");
+
             sponsorBalk.appendChild(afbeelding);
         });
 
     } catch (error) {
         console.error("Sponsors konden niet geladen worden:", error);
-        sponsorBalk.replaceChildren();
 
+        sponsorBalk.replaceChildren();
         sponsorBalk.textContent =
             "De sponsorlogo's konden momenteel niet geladen worden.";
     }
 }
 
-// START DE FUNCTIE
 laadSponsors();
+
 
 
 //COUNTDOWN
