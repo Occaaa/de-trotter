@@ -325,8 +325,8 @@ p.s {
   align-items: center;
   justify-content: left;
   flex-wrap: wrap;
-  gap: 30px;
-	height: 100px;
+  gap: 16px;
+	min-height: 160px;
 }
 
 .sponsorachtergrond {
@@ -341,7 +341,7 @@ p.s {
 .sponsorbalk img {
   height: 100px;
   width: auto;
-  max-width: 240px;
+  max-width: 300px;
   object-fit: contain;
 }
 
