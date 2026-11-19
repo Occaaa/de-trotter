@@ -13,6 +13,7 @@
 
   --accent-1: #0B5407;
   --accent-2: #cfdaa8;
+	--accent-3: #0167b1;
 
   --trans-time-slow: 600ms ease-in-out;
   --trans-time-med: 300ms ease-in-out;
@@ -109,11 +110,11 @@ h4, button, #days, #hours, #minutes {
 	text-transform: uppercase;
 }
 
-h2::before, h4::before,
-h2::after, h4::after {
+h2:not(.ksa_retour)::before, h4::before,
+h2:not(.ksa_retour)::after, h4::after {
   content: "";
   display: block;
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 button {
@@ -446,6 +447,43 @@ h2.inschrijven::before, h2.inschrijven::after {
 		grid-column: auto;
 		grid-row: auto;
 	}
+}
+
+a.ksa_retour.header {
+	position: fixed;
+	top: 16px;
+	left: 32px;
+	transition: opacity var(--trans-time-fast);
+	z-index: 999;
+}
+
+button.ksa_retour.header {
+	background-color: var(--fill-2);
+	border: solid 2px var(--accent-3);
+	border-radius: 40px;
+	padding: 10px 20px;
+	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button.ksa_retour.header:hover {
+	background-color: var(--accent-3);
+	transform: none;
+	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+p.ksa_retour.header {
+	font-family: "Source Sans Pro", sans-serif;
+	font-style: normal;
+	font-size: var(--font-size-p);
+	letter-spacing: var(--letter-spacing-p);
+	font-weight: 500;
+	text-transform: none;
+	color: var(--accent-3);
+	margin: 0;
+}
+
+button.ksa_retour.header:hover p{
+	color: var(--fill-2);
 }
 
 .cookie-banner {
