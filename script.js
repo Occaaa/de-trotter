@@ -1,3 +1,4 @@
+//INSCHRIJVINGSKNOP
 document.addEventListener("DOMContentLoaded", () => {
   const floatingBtn = document.querySelector('.inschrijven-a.header');
   const wandelingSec = document.getElementById('wandeling');
@@ -30,7 +31,91 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+//AUTOMATISCHE SPONSORBALK
+// GOOGLE DRIVE CONFIGURATIE
+const API_KEY = "AIzaSyCHNm5U2mhb4smROFU51Q4D7CNNDi0zSlo";
+const FOLDER_ID = "1peh-VvG4H3ORw8-b43vRXgyNqE4ci34M";
 
+// ELEMENT OP DE WEBSITE
+const sponsorBalk = document.getElementById("sponsorbalk");
+
+// FUNCTIE OM ALLE AFBEELDINGEN OP TE HALEN
+async function laadSponsors() {
+    try {
+        let bestanden = [];
+        let pageToken = null;
+
+        // Haal alle pagina's met bestanden op
+        do {
+            const parameters = new URLSearchParams({
+                key: API_KEY,
+                q: `'${FOLDER_ID}' in parents and trashed = false`,
+                fields: "nextPageToken,files(id,name,mimeType,webContentLink)",
+                pageSize: "1000",
+                orderBy: "name"
+            });
+
+            if (pageToken) {
+                parameters.set("pageToken", pageToken);
+            }
+
+            const response = await fetch(
+                `https://www.googleapis.com/drive/v3/files?${parameters}`
+            );
+
+            if (!response.ok) {
+                throw new Error(`Google Drive API-fout: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            bestanden = bestanden.concat(data.files || []);
+            pageToken = data.nextPageToken;
+
+        } while (pageToken);
+
+        // Filter uitsluitend afbeeldingen
+        const afbeeldingen = bestanden.filter(bestand =>
+            bestand.mimeType &&
+            bestand.mimeType.startsWith("image/") &&
+            bestand.webContentLink
+        );
+
+        // Verwijder de laadmelding
+        sponsorBalk.replaceChildren();
+
+        // Toon melding als er geen afbeeldingen zijn
+        if (afbeeldingen.length === 0) {
+            sponsorBalk.textContent = "Er zijn momenteel geen sponsors.";
+            return;
+        }
+
+        // Maak voor elke afbeelding een img-element
+        afbeeldingen.forEach(bestand => {
+            const afbeelding = document.createElement("img");
+
+            afbeelding.src = bestand.webContentLink;
+            afbeelding.alt = bestand.name.replace(/\.[^/.]+$/, "");
+            afbeelding.loading = "lazy";
+            afbeelding.classList.add("sponsorlogo");
+
+            sponsorBalk.appendChild(afbeelding);
+        });
+
+    } catch (error) {
+        console.error("Sponsors konden niet geladen worden:", error);
+        sponsorBalk.replaceChildren();
+
+        sponsorBalk.textContent =
+            "De sponsorlogo's konden momenteel niet geladen worden.";
+    }
+}
+
+// START DE FUNCTIE
+laadSponsors();
+
+
+//COUNTDOWN
 const targetDate = new Date(Date.UTC(2027, 0, 17, 11, 0, 0)); // 12u00 Belgische wintertijd
 let reloadStarted = false;
 
