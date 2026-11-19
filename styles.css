@@ -320,6 +320,31 @@ p.s {
 	margin: 0 !important
 }
 
+.sponsorbalk {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: 30px;
+	height: 100px;
+}
+
+.sponsorachtergrond {
+	position: relative;
+	width: 100vw;
+	height: 100%;
+	background-color: var(--fill-3);
+	z-index: 1;
+	visibility: hidden;
+}
+
+.sponsorbalk img {
+  height: 100px;
+  width: auto;
+  max-width: 240px;
+  object-fit: contain;
+}
+
 .footer{
 	position: relative;
 	width: 100vw;
@@ -458,10 +483,14 @@ a.ksa_retour.header {
 }
 
 button.ksa_retour.header {
+	display: grid;
+	grid-auto-flow: column;
+	column-gap: 6px;
+	align-items: center;
 	background-color: var(--fill-2);
 	border: solid 2px var(--accent-3);
 	border-radius: 40px;
-	padding: 10px 20px;
+	padding: 0 20px;
 	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -479,11 +508,21 @@ p.ksa_retour.header {
 	font-weight: 500;
 	text-transform: none;
 	color: var(--accent-3);
-	margin: 0;
+	margin: 10px 0;
 }
 
 button.ksa_retour.header:hover p{
 	color: var(--fill-2);
+}
+
+img.ksa_retour {
+	display: inline;
+	height: 36px;
+	margin: 6px 0;
+}
+
+button.ksa_retour.header:hover img{
+  filter: brightness(0) invert(1);
 }
 
 .cookie-banner {
