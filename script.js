@@ -50,7 +50,7 @@ async function laadSponsors() {
             const parameters = new URLSearchParams({
                 key: API_KEY,
                 q: `'${FOLDER_ID}' in parents and trashed = false`,
-                fields: "nextPageToken,files(id,name,mimeType,webContentLink)",
+                fields: "nextPageToken,files(id,name,mimeType)",
                 pageSize: "1000",
                 orderBy: "name"
             });
@@ -77,8 +77,7 @@ async function laadSponsors() {
         // Filter uitsluitend afbeeldingen
         const afbeeldingen = bestanden.filter(bestand =>
             bestand.mimeType &&
-            bestand.mimeType.startsWith("image/") &&
-            bestand.webContentLink
+            bestand.mimeType.startsWith("image/")
         );
 
         // Verwijder de laadmelding
@@ -92,13 +91,13 @@ async function laadSponsors() {
 
         // Maak voor elke afbeelding een img-element
         afbeeldingen.forEach(bestand => {
-            const afbeelding = document.createElement("img");
+            console.log("Naam:", bestand.name, "| ID:", bestand.id);
 
-            afbeelding.src = bestand.webContentLink;
-            afbeelding.alt = bestand.name.replace(/\.[^/.]+$/, "");
+            const afbeelding = document.createElement("img");
+            afbeelding.src = `https://drive.google.com/uc?export=view&id=${bestand.id}`;
+            afbeelding.alt = bestand.name;
             afbeelding.loading = "lazy";
             afbeelding.classList.add("sponsorlogo");
-
             sponsorBalk.appendChild(afbeelding);
         });
 
