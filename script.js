@@ -94,7 +94,7 @@ async function laadSponsors() {
             console.log("Naam:", bestand.name, "| ID:", bestand.id);
 
             const afbeelding = document.createElement("img");
-            afbeelding.src = `https://drive.google.com/uc?export=view&id=${bestand.id}`;
+            afbeelding.src = "https://res.cloudinary.com/JOUW_ACCOUNT/image/upload/sponsors/logo.png";
             afbeelding.alt = bestand.name;
             afbeelding.loading = "lazy";
             afbeelding.classList.add("sponsorlogo");
