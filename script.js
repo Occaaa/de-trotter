@@ -31,55 +31,117 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-//AUTOMATISCHE SPONSORBALK
 
+//AUTOMATISCHE SPONSORS
 const CLOUD_NAME = "pc9fhedb";
 const SPONSOR_TAG = "trotter_sponsor";
-
 const sponsorBalk = document.getElementById("sponsorbalk");
 
 async function laadSponsors() {
+    if (!sponsorBalk) {
+        console.error("De sponsorbalk werd niet gevonden.");
+        return;
+    }
+
     try {
+        // Haal de sponsorlogo's op uit Cloudinary
         const response = await fetch(
             `https://res.cloudinary.com/${CLOUD_NAME}/image/list/${SPONSOR_TAG}.json`
         );
-
         if (!response.ok) {
             throw new Error(`Cloudinary fout: ${response.status}`);
         }
-
         const data = await response.json();
-        const afbeeldingen = data.resources || [];
+        if (!Array.isArray(data.resources)) {
+            throw new Error("Ongeldige gegevens ontvangen van Cloudinary.");
+        }
+        const sponsors = data.resources;
 
-        sponsorBalk.replaceChildren();
+        // Verwijder de laadmelding
+        const laadMelding = sponsorBalk.querySelector(".sponsor-loading");
+        if (laadMelding) {
+            laadMelding.remove();
+        }
 
-        if (afbeeldingen.length === 0) {
-            sponsorBalk.textContent = "Er zijn momenteel geen sponsors.";
+        // Controleer of er sponsors zijn
+        if (sponsors.length === 0) {
+            sponsorBalk.append("Er zijn momenteel geen sponsors.");
             return;
         }
 
-        afbeeldingen.forEach(bestand => {
+        // Sorteer op Public ID (bijvoorbeeld 01_, 02_, 10_)
+        sponsors.sort((a, b) =>
+            a.public_id.localeCompare(b.public_id, undefined, {
+                numeric: true,
+                sensitivity: "base"
+            })
+        );
+
+        // Voeg elk sponsorlogo toe
+        sponsors.forEach(sponsor => {
             const afbeelding = document.createElement("img");
+            afbeelding.src =
+                `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${sponsor.public_id}.${sponsor.format}`;
+            afbeelding.alt = 
+                sponsor.public_id
+                    .replace(/^\d+_/, "")
+                    .replace(/[_-]/g, " ") + " - sponsor van De Trotter";
 
-            afbeelding.src = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${bestand.public_id}.${bestand.format}`;
-
-            afbeelding.alt = bestand.public_id;
             afbeelding.loading = "lazy";
-            afbeelding.classList.add("sponsorlogo");
+            afbeelding.decoding = "async";
 
-            sponsorBalk.appendChild(afbeelding);
+            // Haal de website op uit de Cloudinary-metadata
+
+            const website = sponsor.context?.custom?.website?.trim();
+
+            // Controleer of het websiteadres geldig is
+            let geldigeWebsite = null;
+            if (website) {
+                try {
+                    const url = new URL(website);
+
+                    if (url.protocol === "https:" || url.protocol === "http:") {
+                        geldigeWebsite = url.href;
+                    }
+                } catch (error) {
+                    console.warn(
+                        `Ongeldig websiteadres voor ${sponsor.public_id}:`,
+                        website
+                    );
+                }
+            }
+
+            // Maak het logo klikbaar als er een website is
+            if (geldigeWebsite) {
+                const link = document.createElement("a");
+                link.href = geldigeWebsite;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.setAttribute(
+                    "aria-label",
+                    `Bezoek de website van ${afbeelding.alt}`
+                );
+                link.appendChild(afbeelding);
+                sponsorBalk.appendChild(link);
+            } else {
+                // Geen website ingevuld: toon enkel het logo
+                sponsorBalk.appendChild(afbeelding);
+            }
         });
 
     } catch (error) {
         console.error("Sponsors konden niet geladen worden:", error);
-
-        sponsorBalk.replaceChildren();
-        sponsorBalk.textContent =
-            "De sponsorlogo's konden momenteel niet geladen worden.";
+        const laadMelding = sponsorBalk.querySelector(".sponsor-loading");
+        if (laadMelding) {
+            laadMelding.textContent =
+                "De sponsorlogo's konden momenteel niet geladen worden.";
+        }
     }
 }
 
+// Start het laden van de sponsors
 laadSponsors();
+
 
 
 
