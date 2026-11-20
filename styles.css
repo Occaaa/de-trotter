@@ -210,6 +210,7 @@ p.s {
 @media (max-width: 800px) {
 	.hero-titel {
 		width: 100%;
+		margin-top: 64px;
 	}
 
 	.hero-text {
@@ -226,7 +227,7 @@ p.s {
 .ksa-grimbergen {
 	rotate: 4deg;
 	padding: 2px 18px;
-	margin-top: -12px;
+	margin-top: -6px;
 	margin-right: 10%;
 	justify-self: right;
 	color: var(--fill-2);
@@ -341,14 +342,14 @@ p.s {
 .sponsorbalk img {
   height: 100px;
   width: auto;
-  max-width: 240px;
+  max-width: 200px;
   object-fit: contain;
 }
 
 @media (max-width: 500px) {
 	.sponsorbalk img {
-		height: 64px;
-		max-width: 154px;
+		height: 50px;
+		max-width: 100px;
 	}
 }
 
@@ -387,9 +388,9 @@ h2.footer-title.top::before {
 	margin-top: 32px;
 	display: grid;
   grid-template-columns: 1fr 1fr 2fr;
-	grid-template-rows: 1fr 1fr; /*moet 1fr 1fr zijn bij finale*/
+	grid-template-rows: 1fr 1fr;
 	column-gap: 24px;
-	row-gap: 0;       /*moet 24px zijn bij finale versie*/
+	row-gap: 0;
 }
 
 h2.inschrijven {
@@ -398,45 +399,15 @@ h2.inschrijven {
 	font-weight: 400;
 }
 
-h2.inschrijven.header {
-	color: var(--fill-2) !important;
-	background-color: var(--accent-1);
-}
-
-.inschrijven-a.header {
-	position: fixed;
-	top: 16px;
-	right: 32px;
-	opacity: 0; 
-	pointer-events: none;
-	transform-origin: right top;
-	transform: scale(0.6);
-	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2);
-	transition: opacity var(--trans-time-fast);
-	z-index: 999;
-}
-
-.inschrijven-a.header.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-h2.inschrijven::before, h2.inschrijven::after {
-	margin-bottom: 0;
-}
-
 .nav-menu {
-	/*display: none;		/*moet bij finale weg*/
-
-	grid-column: 1;		/*moet wel bij finale*/
+	grid-column: 1;
 	grid-row: 1 / 3;
-/**/
 	margin-top: -12px;
 }
 
 .contact {
-	grid-column: 2;   /*finale: moet 1 zijn*/
-	grid-row: 1;      /*finale: moet 2 zijn*/
+	grid-column: 2;
+	grid-row: 1;
 	margin-top: -12px;
 }
 
@@ -532,59 +503,29 @@ button.ksa_retour.header:hover img{
   filter: brightness(0) invert(1);
 }
 
-.cookie-banner {
-	position: fixed;
-	z-index: 999;
-	right: 32px;
-	bottom: 16px;
-	width: min(calc(100vw - 2*32px), 400px);
-	display: flex;
-	justify-content: center;
-	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.cookie-banner[hidden] {
-	display: none;
-	pointer-events: none;
-}
-
-.cookie-banner_content {
-	padding: 16px 24px;
+h2.inschrijven.header {
+	color: var(--fill-2) !important;
 	background-color: var(--accent-1);
-	color: var(--fill-2);
 }
 
-.cookie-banner h2, .cookie-banner h3 {
-	background-color: transparent;
-	color: var(--fill-2);
+.inschrijven-a.header {
+	position: fixed;
+	top: 16px;
+	right: 32px;
+	opacity: 0; 
+	pointer-events: none;
+	transform-origin: right top;
+	transform: scale(0.6);
+	box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2);
+	transition: opacity var(--trans-time-fast);
+	z-index: 998;
 }
 
-.cookie-titel {
-	transform: scale(1.20);
-	transform-origin: left bottom;
-	margin-top: 8px;
+.inschrijven-a.header.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.cookie-banner p {
-	margin-top: 12px;
-	color: var(--fill-2);
-}
-
-.cookie-banner_actions {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px;
-	margin-top: 16px;
-}
-
-.cookie-banner button.cookie-accept {
-	background-color: var(--fill-2);
-}
-
-.cookie-banner button.cookie-accept h3 {
-	color: var(--accent-1);
-}
-
-.cookie-banner button.cookie-reject {
-	border: 1px solid var(--accent-2)
+h2.inschrijven::before, h2.inschrijven::after {
+	margin-bottom: 0;
 }
