@@ -455,7 +455,7 @@ h2.inschrijven {
 a.ksa_retour.header {
 	position: fixed;
 	top: 16px;
-	left: 32px;
+	left: 16px;
 	transition: opacity var(--trans-time-fast);
 	z-index: 999;
 }
