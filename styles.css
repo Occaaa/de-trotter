@@ -326,7 +326,7 @@ p.s {
   align-items: center;
   justify-content: left;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
 	min-height: 100px;
 }
 
@@ -347,6 +347,10 @@ p.s {
 }
 
 @media (max-width: 500px) {
+	.sponsorbalk {
+		gap: 16px;
+	}
+
 	.sponsorbalk img {
 		height: 50px;
 		max-width: 100px;
